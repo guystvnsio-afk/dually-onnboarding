@@ -75,10 +75,11 @@ async function postJSON(url, payload) {
 
 async function submitOnboarding(data) {
   const payload = buildSubmitPayload(data);
-  const [ghl, sheet] = await Promise.all([
-    postJSON(SUBMIT_CONFIG.GHL_WEBHOOK_URL, payload),
-    postJSON(SUBMIT_CONFIG.APPS_SCRIPT_URL, payload)
-  ]);
+  // Post only to Apps Script — it relays to GHL server-side (no CORS issues,
+  // and GHL receives a clean application/json body so the reference-payload
+  // capture works on first hit).
+  const sheet = await postJSON(SUBMIT_CONFIG.APPS_SCRIPT_URL, payload);
+  const ghl = { ok: true, skipped: true, relayed: true };
   // Save a local copy of the payload with the ID, so retries preserve it
   try {
     const prior = JSON.parse(localStorage.getItem('dually-submissions') || '[]');
@@ -88,8 +89,8 @@ async function submitOnboarding(data) {
   return {
     submissionId: payload.submissionId,
     ghl, sheet,
-    anyOk: (ghl.ok || ghl.skipped) && (sheet.ok || sheet.skipped),
-    bothSkipped: ghl.skipped && sheet.skipped
+    anyOk: sheet.ok || sheet.skipped,
+    bothSkipped: sheet.skipped
   };
 }
 
