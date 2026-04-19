@@ -8,7 +8,7 @@ const { useState, useEffect, useMemo, useRef } = React;
 // as the onboarding form uses; the script now handles both).
 // =========================================================
 const DASH_CONFIG = {
-  APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbziRCPKkQhk_L9SFPTHuksMOHdeE4V-AUFeDdpRoKZ3zMT_2dLBZEcQ-boQh0mK7lMccg/exec',
+  APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbypsbkN7TeNcpfUSv7RPJhWB5Yx6L2nCMy6gi4XxYlC_13LYfvuCG9GeUVagRA2bTGnkQ/exec',
   PASSWORD: '2026dually',
   SLA_DAYS: 4, // "Needs attention" if launch > this many days after setup fee
   STALE_HOURS: 24 // "Needs attention" if any stage has been 'running' > this
